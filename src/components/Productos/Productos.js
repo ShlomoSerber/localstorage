@@ -1,7 +1,13 @@
+import {useState} from "react";
 import { Link } from 'react-router-dom';
 import './Productos.css'
 
 const Agregar = () => {
+    const [products, setProducts] = useState();
+    setProducts(JSON.parse(localStorage.getItem("products")));
+
+    console.log(products);
+
     return (
         <div className='container mt-4'>
             <h2>Productos</h2>
