@@ -1,12 +1,14 @@
 import {useState} from "react";
+import {useEffect} from "react";
 import { Link } from 'react-router-dom';
 import './Productos.css'
 
 const Agregar = () => {
-    const [products, setProducts] = useState();
-    setProducts(JSON.parse(localStorage.getItem("products")));
+    const [products, setName] = useState([]);
 
-    console.log(products);
+    useEffect (() => {
+        setName(JSON.parse(localStorage.getItem("products")))
+    }, [])
 
     return (
         <div className='container mt-4'>
@@ -21,6 +23,16 @@ const Agregar = () => {
                 <div className='col-2 fw-bolder'>Cantidad</div>
                 <div className='col-2 fw-bolder'>Precio</div>
                 <div className='col-1 fw-bolder'>Acción</div>
+            </div>
+            <div>
+            {products.map(product =>  
+            <div className='row border-top border-bottom mt-3 p-2' key={product.id}>
+                <div className='col-2'>{product.id}</div>
+                <div className='col-5'>{product.name}</div>
+                <div className='col-2'>{product.amount}</div>
+                <div className='col-2'>{product.price * product.amount}</div>
+                <div className='col-1'>Acción</div>
+            </div>)}
             </div>
         </div>
     );

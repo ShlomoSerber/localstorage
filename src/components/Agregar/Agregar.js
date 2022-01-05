@@ -5,22 +5,42 @@ const Agregar = () => {
     const [name, setName] = useState("");
     const [amount, setAmount] = useState(0);
     const [price, setPrice] = useState(0);
-    const [id, setId] = useState(1);
-    const [products, setProducts] = useState([]);
+    let id = 1;
+    if (parseInt(localStorage.getItem("lastId")) !== 1) {
+        id = parseInt(localStorage.getItem("lastId"))
+    }
+    /*let id = parseInt(localStorage.getItem("lastId")) !== 0
+    ? parseInt(localStorage.getItem("lastId"))
+    : 1;*/
+    /*const [id, setId] = useState(
+    parseInt(localStorage.getItem("lasId")) !== 0
+    ? parseInt(localStorage.getItem("lasId"))
+    : 1);*/
+    let products = [];
+    if (JSON.parse(localStorage.getItem("products")).length > 0 ) {
+        products += JSON.parse(localStorage.getItem("products"))
+    }
+    /*let products = JSON.parse(localStorage.getItem("products")).length > 0 
+    ? JSON.parse(localStorage.getItem("products"))
+    : [];*/
+    /*const [products, setProducts] = useState(JSON.parse(
+    localStorage.getItem("products")).length > 0 ?
+    JSON.parse(localStorage.getItem("products")).length
+    : []);*/
 
     const addProduct = (event) => {
         event.preventDefault();
-        if (1 == 1) {
-            setProducts([{name: name, amount: amount, price: price, id: id}, ...products])
-            setId(parseInt(id) + 1);
-            document.querySelector("#name").value = "";
-            document.querySelector("#amount").value = "";
-            document.querySelector("#price").value = "";
-        }
+        products.push({name: name, amount: amount, price: price, id: id});
+        id++;
+        document.querySelector("#name").value = "";
+        document.querySelector("#amount").value = "";
+        document.querySelector("#price").value = "";
     }
 
+    console.log(id)
+    console.log(products)
+    localStorage.setItem("lastId", id);
     localStorage.setItem("products", JSON.stringify(products));
-    console.log(products);
 
     return (
         <div className='container mt-4'>
