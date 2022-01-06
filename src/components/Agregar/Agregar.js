@@ -2,43 +2,28 @@ import {useState} from "react";
 import './Agregar.css'
 
 const Agregar = () => {
+    let array = localStorage.getItem("products") !== null
+    ? JSON.parse(localStorage.getItem("products"))
+    : [];
+    let firstId = localStorage.getItem("lastId") > 1
+    ? localStorage.getItem("lastId")
+    : 1;
+
     const [name, setName] = useState("");
     const [amount, setAmount] = useState(0);
     const [price, setPrice] = useState(0);
-    let id = 1;
-    if (parseInt(localStorage.getItem("lastId")) !== 1) {
-        id = parseInt(localStorage.getItem("lastId"))
-    }
-    /*let id = parseInt(localStorage.getItem("lastId")) !== 0
-    ? parseInt(localStorage.getItem("lastId"))
-    : 1;*/
-    /*const [id, setId] = useState(
-    parseInt(localStorage.getItem("lasId")) !== 0
-    ? parseInt(localStorage.getItem("lasId"))
-    : 1);*/
-    let products = [];
-    if (JSON.parse(localStorage.getItem("products")).length > 0 ) {
-        products += JSON.parse(localStorage.getItem("products"))
-    }
-    /*let products = JSON.parse(localStorage.getItem("products")).length > 0 
-    ? JSON.parse(localStorage.getItem("products"))
-    : [];*/
-    /*const [products, setProducts] = useState(JSON.parse(
-    localStorage.getItem("products")).length > 0 ?
-    JSON.parse(localStorage.getItem("products")).length
-    : []);*/
+    const [id, setId] = useState(firstId);
+    const [products, setProducts] = useState(array);
 
     const addProduct = (event) => {
         event.preventDefault();
-        products.push({name: name, amount: amount, price: price, id: id});
-        id++;
+        setProducts([{name: name, amount: amount, price: price, id: id}, ...products]);
+        setId(parseInt(id) + 1)
         document.querySelector("#name").value = "";
         document.querySelector("#amount").value = "";
         document.querySelector("#price").value = "";
     }
 
-    console.log(id)
-    console.log(products)
     localStorage.setItem("lastId", id);
     localStorage.setItem("products", JSON.stringify(products));
 
