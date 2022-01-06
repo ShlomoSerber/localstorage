@@ -9,9 +9,9 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Agregar />} />
-        <Route path="/productos" element={<Productos />} />
         <Route path="/localstorage" element={<Productos />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/" element={<Agregar />} />
       </Routes>
     </Router>
   );
